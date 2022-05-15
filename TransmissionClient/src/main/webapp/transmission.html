@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Transmission</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+	 <link href=
+'https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/ui-lightness/jquery-ui.css'
+          rel='stylesheet'>
+      
+    <script src=
+"https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" >
+    </script>
+      
+    <script src=
+"https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" >
+    </script>
+</head>
+</head>
+
+<body>
+<div class="container">
+    <h1><center>TRANSMISSION DETAILS</h1>
+    <form id="transmission_form">
+        <div class="form-group">
+            <input type="text" id="sub_code" name="" required="">
+            <span class="error_form" id="transmission_error_message"></span>
+            <label>Transmission ID</label>
+        </div>
+        <div class="form-group">
+            <input type="text" id="substationCode" name="" required="">
+            <span class="error_form" id="substationCode_error_message"></span>
+            <label>Substation code</label>
+        </div>
+		 <div>
+            <select style="color: blue"  id="active" required="" >
+			<span class="error_form" id="active_error_message"></span>
+                <option value="1"> Active </option>
+                <option value="2" style="color: forestgreen"> True </option>
+                <option value="3" style="color: maroon"> False </option>
+            </select>
+        </div>
+		 <div>
+            <input type="text" id="activeFrom"  required="" />
+			 <span class="error_form" id="activeFrom_error_message"></span>
+               <label class="form-label"  > Date of Active From </label>
+		</div>
+        <div>
+          <input type="text" id="activeTo"  required=""/>
+		     <span class="error_form" id="activeTo_error_message"></span>
+                <label class="form-label"  > Date of Active To </label>
+        </div>
+			  
+			 
+        <input type="submit" value="Insert" name="">
+    </form>
+</div>
+
+<script type="text/javascript">
+
+$(function() {
+
+        $("#transmission_error_message").hide();
+        $("#substationCode_error_message").hide();
+        $("#active_error_message").hide();
+        $("#activeFrom_error_message").hide();
+        $("#activeTo_error_message").hide();
+
+        var error_transSubId = false;
+        var error_substationCode = false;
+        var error_active = false;
+        var error_activeFrom = false;
+        var error_activeTo = false;
+//========== CREATING FUNCTION USING JQUERY =========================		
+		 $("#transSubId").focusout(function(){
+            check_transSubId();
+        });
+        $("#substationCode").focusout(function() {
+            check_substationCode();
+        });
+        $("#active").focusout(function() {
+            check_active();
+        });
+        $("#activeFrom").focusout(function() {
+            check_activeFrom();
+        });
+        $("#activeTo").focusout(function() {
+            check_activeTo();
+        });
+		
+		//============= validate transSubId code =================
+		
+         function check_subcode() {
+            var pattern = /sco[1-9]/;
+            var code = $("#transSubId").val();
+			var code_length = $("#transSubId").val().length;
+            if (pattern.test(code) &&  code_length > 7){
+                $("#transmission_error_message").hide();
+                $("#transSubId").css("border-bottom","2px solid #34F458");
+            } else {
+                $("#transmission_error_message").html(" fill with TransID");
+                $("#transmission_error_message").show();
+                $("#transSubId").css("border-bottom","2px solid #F90A0A");
+                error_transSubId = true;
+            }
+        }
+		
+       //============= validate substationCode =================
+ 		
+         function check_substationCode() {
+            var pattern = /sco[1-9]/;
+            var code = $("#substationCode").val();
+			var code_length = $("#substationCode").val().length;
+            if (pattern.test(code) &&  code_length > 7){
+                $("#substationCode_error_message").hide();
+                $("#substationCode").css("border-bottom","2px solid #34F458");
+            } else {
+                $("#substationCode_error_message").html(" start with S and max length is 4");
+                $("#substationCode_error_message").show();
+                $("#substationCode").css("border-bottom","2px solid #F90A0A");
+                error_substationCode = true;
+            }
+        }
+//=============== validate Active status ======================
+
+           function check_active() {
+            
+            var type = $("#active").val();
+            if ( type !== '') {
+                $("#active_error_message").hide();
+                $("#active").css("border-bottom","2px solid #34F458");
+            } else {
+                $("#active_error_message").html("should enter active status");
+                $("#active_error_message").show();
+                $("#active").css("border-bottom","2px solid #F90A0A");
+                error_active = true;
+            }
+        }		
+//============== vallidate  active from ======================================
+        function check_activeFrom() {
+            
+            var type = $("#activeFrom").val();
+            if ( type !== '') {
+                $("#activeFrom_error_message").hide();
+                $("#activeFrom").css("border-bottom","2px solid #34F458");
+            } else {
+                $("#activeFrom_error_message").html("should enter date");
+                $("#activeFrom_error_message").show();
+                $("#activeFrom").css("border-bottom","2px solid #F90A0A");
+                error_activeFrom = true;
+            }
+        }
+//============== validate active To ================		
+		
+	     function check_activeTo() {
+            
+            var type = $("#activeTo").val();
+            if ( type !== '') {
+                $("#activeTo_error_message").hide();
+                $("#activeTo").css("border-bottom","2px solid #34F458");
+            } else {
+                $("#activeTo_error_message").html("should enter date");
+                $("#activeTo_error_message").show();
+                $("#activeTo").css("border-bottom","2px solid #F90A0A");
+                error_activeTo = true;
+            }
+        }
+//=====================date picker =====================
+		
+		 $(document).ready(function() {
+          
+            $(function() {
+                $( "#activeFrom" ).datepicker();
+            });
+			
+			$(function() {
+                $( "#activeTo" ).datepicker();
+            });
+        })
+// =====================validate submit button ==================
+
+         $("#sourcetransmission_form").submit(function() {
+            error_transSubId = false;
+            error_substationCode = false;
+            error_active = false;
+            error_activeFrom = false;
+            error_activeTo = false;
+
+            error_transSubId();
+            error_substationCode();
+            error_active();
+            error_activeFrom();
+            error_activeTo();
+
+            if (error_transSubId === false && error_substationCode === false && error_active === false && error_activeFrom === false && error_activeTo === false ) {
+                alert("Source Successfull");
+                return true;
+            } else {
+                alert("Please Fill the form Correctly");
+                return false;
+            }
+
+
+        });
+	});	
+
+</script>
+
+
+</body>
